@@ -1,4 +1,4 @@
-#include "window.hpp"
+#include "include/window.hpp"
 
 Window::Window(GLfloat size, std::string title){
     this->width = this->height = size;
