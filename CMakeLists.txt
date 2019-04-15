@@ -4,3 +4,5 @@ projetct (SolarSystem C++)
 set( PROJET_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 include_directories( include )
+
+#This file needs to be finished
