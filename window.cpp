@@ -32,3 +32,12 @@ Window::Window(GLfloat width, GLfloat height, std::string title){
 
     glfwMakeContextCurrent(this->window);
 }
+
+void Window::updateWindow(){
+    glfwSwapBuffers(window);
+    glfwPollEvents();
+}
+
+bool Window::shouldClose(){
+    return glfwWindowShouldClose(window);
+}

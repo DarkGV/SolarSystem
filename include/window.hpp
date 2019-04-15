@@ -9,8 +9,10 @@
 class Window{
     GLfloat width, height;
     std::string title;
-public:
     GLFWwindow* window;
+public:
     Window(GLfloat, std::string);
     Window(GLfloat, GLfloat, std::string);
+    void updateWindow();
+    bool shouldClose();
 };
