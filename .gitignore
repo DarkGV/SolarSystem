@@ -2,3 +2,5 @@ nothing.cpp
 # This folder can bring problems of size lmit when commiting
 .vscode
 *.out
+
+ignore*
