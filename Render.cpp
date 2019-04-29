@@ -18,33 +18,49 @@ void Render::transferData(Planet* p){
 
   Planets.push_back(p);
 
+  glUseProgram(programID);
+
   glBindVertexArray(this->VertexArrayObject);
 
   glBindBuffer(GL_ARRAY_BUFFER, this->VertexBufferObject);
-  glBufferData(GL_ARRAY_BUFFER, (unsigned int)p->planetVertices.size() * sizeof(float), p->planetVertices.data(), GL_DYNAMIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, (unsigned int)p->planetVertices.size() * sizeof(float), p->planetVertices.data(), GL_STATIC_DRAW);
 
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->ElementBufferObject);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, (unsigned int)p->planetIndices.size() * sizeof(unsigned int), p->planetIndices.data(), GL_DYNAMIC_DRAW);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, (unsigned int)p->planetIndices.size() * sizeof(unsigned int), p->planetIndices.data(), GL_STATIC_DRAW);
 
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5*sizeof(GLfloat), NULL);
   glEnableVertexAttribArray(0);
-
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 5*sizeof(GLfloat), (GLvoid*)(3*sizeof(GLfloat)));
-  glEnableVertexAttribArray(1);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 
   glBindBuffer(GL_ARRAY_BUFFER, 0);
   glBindVertexArray(0);
 
+  glDisableVertexAttribArray(0);
+
 }
 
 void Render::draw(){
-  glUseProgram(programID);
   glBindVertexArray(this->VertexArrayObject);
+
+  glm::mat4 projection = glm::perspective(glm::radians<float>(90), 4.f/3.f, 10.f, 10000.0f);
+  glm::mat4 view = glm::lookAt(
+								glm::vec3(4,3,-3), // Camera is at (4,3,-3), in World Space
+								glm::vec3(0,0,0), // and looks at the origin
+								glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
+);
+  glm::mat4 model = glm::mat4(1.f);
+
+  GLint mvpLocation = glGetUniformLocation(programID, "MVP");
+
+  std::cout << mvpLocation;
+
+  glm::mat4 mvp = projection * view * model;
+
+  glUniformMatrix4fv(mvpLocation, 1, GL_FALSE, &mvp[0][0]);
+
   for(int i = 0; i < Planets.size(); i++){
     Planet* p = Planets[i];
-    glDrawElements(GL_TRIANGLES, (unsigned int) p->planetIndices.size(), GL_UNSIGNED_INT, NULL);
+    glDrawArrays(GL_LINE_LOOP, 0, (unsigned int) p->planetVertices.size()*sizeof(float));
   }
-  glBindVertexArray(0);
 }
 
 /*

@@ -1,9 +1,11 @@
 #version 330 core
 
 layout(location = 0) in vec3 planetPosition;
-layout(location = 1) in vec3 nothingInteresting;
 
+uniform mat4 MVP;
+out vec3 vecColor;
 
 void main(){
-    gl_Position = mat4(1.f) * mat4(1.f) * mat4(1.f) * vec4(planetPosition, 1.f);
+    gl_Position =  MVP * vec4(planetPosition, 1.f);
+    vecColor = vec3(1.f, 0.f, 0.f);
 }
