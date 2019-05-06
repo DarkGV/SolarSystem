@@ -1,8 +1,19 @@
-cmake_minimum_required (VERSION 3.9)
-projetct (SolarSystem C++)
+cmake_minimum_required (VERSION 3.0)
+set (CMAKE_CXX_STANDARD 11)
 
-set( PROJET_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+project (SOLARSYSTEM)
+
+if(MSVC)
+  add_definitions(/DNOMINMAX)
+endif()
+
+find_package( glm CONFIG REQUIRED )
+find_package( glfw3 CONFIG REQUIRED )
+find_package( OpenGL REQUIRED )
 
 include_directories( include )
 
-#This file needs to be finished
+add_subdirectory( include )
+add_subdirectory( SolarSystem )
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/res DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

@@ -1,0 +1,1 @@
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/SolarSystem.dir/scenemultilight.cpp.o CMakeFiles/SolarSystem.dir/main.cpp.o  -o SolarSystem ../include/libingredients.a /usr/local/lib/libglfw.3.3.dylib -framework OpenGL 
