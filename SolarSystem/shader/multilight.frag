@@ -38,7 +38,7 @@ void phongModel( vec3 pos, vec3 norm, out vec3 ambAndDiff, out vec3 spec ) {
 
 void main() {
     vec3 ambAndDiff, spec;
-    vec4 texColor = color(1.f, 0.f, 0.f, 0.f);//texture( Tex1, TexCoord );
+    vec4 texColor = texture( Tex1, TexCoord );
     phongModel( Position, Normal, ambAndDiff, spec );
     FragColor = (vec4( ambAndDiff, 1.0 ) * texColor) + vec4(spec,1.0);
 }
