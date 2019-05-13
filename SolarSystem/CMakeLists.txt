@@ -1,6 +1,9 @@
 set(target SolarSystem)
 set( chapter03_SOURCES
-	scenemultilight.cpp
+	SolarSystem.hpp
+	SolarSystem.cpp
+	Planet.hpp
+	Planet.cpp
 	main.cpp )
 
 add_executable( ${target} ${chapter03_SOURCES} )
