@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include "objmesh.h"
 #include "texture.h"
@@ -10,7 +11,7 @@
 class Planet{
     std::unique_ptr<ObjMesh> planet;
     std::string textureLocation, objectLocation;
-
+    GLuint textureID;
 
 public:
     Planet(std::string, std::string);

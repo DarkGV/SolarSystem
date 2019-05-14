@@ -17,9 +17,8 @@ void Planet::loadTexture(){
 
     GLint s, t;
     GLubyte *data;
-    GLuint textureID;
 
-    glActiveTexture(GL_TEXTURE0);
+    //glActiveTexture(GL_TEXTURE0);
     data = Texture::loadPixels(this->textureLocation.c_str(), s, t);
 
     glGenTextures(1, &textureID);
@@ -28,9 +27,11 @@ void Planet::loadTexture(){
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, s, t, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 
     glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, s, t, GL_RGBA, GL_UNSIGNED_BYTE, data);
+
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
+    glGenerateMipmap(GL_TEXTURE_2D);
     stbi_image_free(data);
 }
 

@@ -50,7 +50,7 @@ public:
         // Load the OpenGL functions.
         if(!gladLoadGL()) { exit(-1); }
 
-        GLUtils::dumpGLInfo();
+        //GLUtils::dumpGLInfo();
 
         // Initialization
         glClearColor(0.5f,0.5f,0.5f,1.0f);
@@ -108,6 +108,7 @@ private:
             GLUtils::checkForOpenGLError(__FILE__,__LINE__);
             scene.update(float(glfwGetTime()));
             scene.render();
+            //scene.renderMercury();
             glfwSwapBuffers(window);
             glfwPollEvents();
         }

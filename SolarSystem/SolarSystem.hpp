@@ -11,7 +11,8 @@
 class SolarSystem : public Scene {
     GLSLProgram p;
 
-    Planet* Sun;
+    Planet* Sun, *Mercury, *Venus, *Earth, *Mars, *Jupiter, *Saturn,
+    *Uranus, *Neptune;
 
     GLint width, height;
     glm::mat4 model, view, projection;
@@ -22,6 +23,7 @@ class SolarSystem : public Scene {
 public:
     SolarSystem();
 
+    void renderMercury();
     void initScene();
     void render();
     void resize(int, int);
