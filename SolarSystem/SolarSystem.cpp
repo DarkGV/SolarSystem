@@ -19,7 +19,7 @@ void SolarSystem::initScene(){
 
     glEnable(GL_DEPTH_TEST);
 
-    view = glm::lookAt(glm::vec3(500.f,100.f,200.f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(0.0f,1.0f,0.0f));
+    view = glm::lookAt(glm::vec3(170.f,0.f,50.f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(0.0f,1.0f,0.0f));
     projection = glm::mat4(1.f);
 
     //glActiveTexture(GL_TEXTURE0);
@@ -41,32 +41,76 @@ void SolarSystem::render(){
     p.setUniform("Material.Shininess", 100.0f);
 
     model = glm::mat4(1.f);
+    model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
 
     setMatrices();
     Sun->loadTexture();
     Sun->renderPlanet();
 
     model = glm::mat4(1.f);
-    model = glm::translate(model, glm::vec3(0.f, 0.f, 120.f));
+    model = glm::translate(model, glm::vec3(0.f, 0.f, 15.f));
+    model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
 
     setMatrices();
     Mercury->loadTexture();
     Mercury->renderPlanet();
 
     model = glm::mat4(1.f);
-    model = glm::translate(model, glm::vec3(0.f, 0.f, 210.f));
+    model = glm::translate(model, glm::vec3(0.f, 0.f, 20.f));
+    model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
 
     setMatrices();
     Venus->loadTexture();
     Venus->renderPlanet();
 
 
-    /*model = glm::mat4(1.f);
-    model = glm::translate(model, glm::vec3(0.f, 0.f, 220.f));
+    model = glm::mat4(1.f);
+    model = glm::translate(model, glm::vec3(0.f, 0.f, 30.f));
+    model = glm::scale(model, glm::vec3(0.003f, 0.003f, 0.003f));
 
     setMatrices();
     Earth->loadTexture();
-    Earth->renderPlanet();*/
+    Earth->renderPlanet();
+
+    model = glm::mat4(1.f);
+    model = glm::translate(model, glm::vec3(0.f, 0.f, 40.f));
+    model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+
+    setMatrices();
+    Mars->loadTexture();
+    Mars->renderPlanet();
+
+    model = glm::mat4(1.f);
+    model = glm::translate(model, glm::vec3(0.f, 0.f, 50.f));
+    model = glm::scale(model, glm::vec3(0.05f, 0.05f, 0.05f));
+
+    setMatrices();
+    Jupiter->loadTexture();
+    Jupiter->renderPlanet();
+
+    model = glm::mat4(1.f);
+    model = glm::translate(model, glm::vec3(0.f, 0.f, 60.f));
+    model = glm::scale(model, glm::vec3(0.03f, 0.03f, 0.03f));
+
+    setMatrices();
+    Saturn->loadTexture();
+    Saturn->renderPlanet();
+
+    model = glm::mat4(1.f);
+    model = glm::translate(model, glm::vec3(0.f, 0.f, 70.f));
+    model = glm::scale(model, glm::vec3(0.03f, 0.03f, 0.03f));
+
+    setMatrices();
+    Uranus->loadTexture();
+    Uranus->renderPlanet();
+
+    model = glm::mat4(1.f);
+    model = glm::translate(model, glm::vec3(0.f, 0.f, 80.f));
+    model = glm::scale(model, glm::vec3(0.03f, 0.03f, 0.03f));
+
+    setMatrices();
+    Neptune->loadTexture();
+    Neptune->renderPlanet();
     glActiveTexture(GL_TEXTURE0);
 }
 
