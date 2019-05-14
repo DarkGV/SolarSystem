@@ -2,8 +2,14 @@
 
 SolarSystem::SolarSystem(){
     Sun = new Planet("/Users/DiogoSilva/Desktop/CGPratico/res/Sun/SunObject.obj", "/Users/DiogoSilva/Desktop/CGPratico/res/Sun/SunTexture.jpg");
-    Mercury = new Planet("/Users/DiogoSilva/Desktop/CGPratico/res/Mercury/MercuryObject.obj", "/Users/DiogoSilva/Desktop/CGPratico/res/Mercury/mercurymap.jpg");
-    Venus
+    Mercury = new Planet("/Users/DiogoSilva/Desktop/CGPratico/res/Mercury/MercuryObject.obj", "/Users/DiogoSilva/Desktop/CGPratico/res/Mercury/MercuryTexture.jpg");
+    Venus = new Planet("/Users/DiogoSilva/Desktop/CGPratico/res/Venus/VenusObject.obj", "/Users/DiogoSilva/Desktop/CGPratico/res/Venus/VenusTexture.jpg");
+    Earth = new Planet("/Users/DiogoSilva/Desktop/CGPratico/res/Earth/EarthObject.obj", "/Users/DiogoSilva/Desktop/CGPratico/res/Earth/EarthTexture.jpg");
+    Mars = new Planet("/Users/DiogoSilva/Desktop/CGPratico/res/Mars/MarsObject.obj", "/Users/DiogoSilva/Desktop/CGPratico/res/Mars/MarsTexture.jpg");
+    Jupiter = new Planet("/Users/DiogoSilva/Desktop/CGPratico/res/Jupiter/JupiterObject.obj", "/Users/DiogoSilva/Desktop/CGPratico/res/Jupiter/JupiterTexture.jpg");
+    Saturn = new Planet("/Users/DiogoSilva/Desktop/CGPratico/res/Saturn/SaturnObject.obj", "/Users/DiogoSilva/Desktop/CGPratico/res/Saturn/SaturnTexture.jpg");
+    Uranus = new Planet("/Users/DiogoSilva/Desktop/CGPratico/res/Uranus/UranusObject.obj", "/Users/DiogoSilva/Desktop/CGPratico/res/Uranus/UranusTexture.jpg");
+    Neptune = new Planet("/Users/DiogoSilva/Desktop/CGPratico/res/Neptune/NeptuneObject.obj", "/Users/DiogoSilva/Desktop/CGPratico/res/Neptune/NeptuneTexture.jpg");
 }
 
 // Static definition of components
@@ -13,7 +19,7 @@ void SolarSystem::initScene(){
 
     glEnable(GL_DEPTH_TEST);
 
-    view = glm::lookAt(glm::vec3(0.f,150.f,70.f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(0.0f,1.0f,0.0f));
+    view = glm::lookAt(glm::vec3(500.f,100.f,200.f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(0.0f,1.0f,0.0f));
     projection = glm::mat4(1.f);
 
     //glActiveTexture(GL_TEXTURE0);
@@ -41,11 +47,26 @@ void SolarSystem::render(){
     Sun->renderPlanet();
 
     model = glm::mat4(1.f);
-    model = glm::translate(model, glm::vec3(0.f, 0.f, 110.f));
+    model = glm::translate(model, glm::vec3(0.f, 0.f, 120.f));
 
     setMatrices();
     Mercury->loadTexture();
     Mercury->renderPlanet();
+
+    model = glm::mat4(1.f);
+    model = glm::translate(model, glm::vec3(0.f, 0.f, 210.f));
+
+    setMatrices();
+    Venus->loadTexture();
+    Venus->renderPlanet();
+
+
+    /*model = glm::mat4(1.f);
+    model = glm::translate(model, glm::vec3(0.f, 0.f, 220.f));
+
+    setMatrices();
+    Earth->loadTexture();
+    Earth->renderPlanet();*/
     glActiveTexture(GL_TEXTURE0);
 }
 
@@ -77,7 +98,7 @@ void SolarSystem::resize(int w, int h)
     glViewport(0,0,w,h);
     width = w;
     height = h;
-    projection = glm::perspective(glm::radians(70.0f), (float)w/h, 0.3f, 100.0f);
+    projection = glm::perspective(glm::radians(45.0f), (float)w/h, 0.1f, 10000.0f);
 }
 
 void SolarSystem::setMatrices()
