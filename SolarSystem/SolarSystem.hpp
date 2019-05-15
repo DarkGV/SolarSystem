@@ -3,6 +3,8 @@
 
 #include "Planet.hpp"
 
+#include <glfw/glfw3.h>
+
 #include <glm/glm.hpp>
 
 #include "cookbookogl.h"
@@ -17,7 +19,7 @@ class SolarSystem : public Scene {
     GLint width, height;
     glm::mat4 model, view, projection;
 
-    void setMatrices();
+    void setMatrices(glm::mat4);
     void compileAndLinkShader(std::string, std::string);
 
 public:

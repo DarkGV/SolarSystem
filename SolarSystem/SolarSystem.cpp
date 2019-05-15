@@ -19,7 +19,7 @@ void SolarSystem::initScene(){
 
     glEnable(GL_DEPTH_TEST);
 
-    view = glm::lookAt(glm::vec3(170.f,0.f,50.f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(0.0f,1.0f,0.0f));
+    view = glm::lookAt(glm::vec3(5.f,0.f,10.f), glm::vec3(0.0f,0.0f, 30.0f), glm::vec3(0.0f,1.0f,0.0f));
     projection = glm::mat4(1.f);
 
     //glActiveTexture(GL_TEXTURE0);
@@ -40,10 +40,22 @@ void SolarSystem::render(){
     p.setUniform("Material.Ka", 0.1f, 0.1f, 0.1f);
     p.setUniform("Material.Shininess", 100.0f);
 
+    GLfloat currentFrameTime = (GLfloat)glfwGetTime();
+
+    glm::mat4 modelVenus, modelEarth;
+
+    modelVenus = glm::translate(glm::mat4(1.f), glm::vec3(0.f, 0.f, 20.f));
+    modelVenus = glm::scale(modelVenus, glm::vec3(0.01f, 0.01f, 0.01f));
+    modelVenus = glm::rotate(modelVenus, glm::radians((GLfloat)glfwGetTime() * 18.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
+    modelEarth = glm::translate(glm::mat4(1.f), glm::vec3(0.f, 0.f, 30.f));
+    modelEarth = glm::rotate(modelEarth, glm::radians((GLfloat)glfwGetTime()*20.f), glm::vec3(0.0f, 1.0f, 0.0f));
+    modelEarth = glm::scale(modelEarth, glm::vec3(0.003f, 0.003f, 0.003f));
+
     model = glm::mat4(1.f);
     model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
 
-    setMatrices();
+    setMatrices(model);
     Sun->loadTexture();
     Sun->renderPlanet();
 
@@ -51,24 +63,24 @@ void SolarSystem::render(){
     model = glm::translate(model, glm::vec3(0.f, 0.f, 15.f));
     model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
 
-    setMatrices();
+    setMatrices(model);
     Mercury->loadTexture();
     Mercury->renderPlanet();
 
-    model = glm::mat4(1.f);
-    model = glm::translate(model, glm::vec3(0.f, 0.f, 20.f));
-    model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
+    // model = glm::mat4(1.f);
+    // model = glm::translate(model, glm::vec3(0.f, 0.f, 20.f));
+    // model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
+    // model = glm::rotate(model, glm::radians((GLfloat)currentFrameTime * 20.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
-    setMatrices();
+    setMatrices(modelVenus);
     Venus->loadTexture();
     Venus->renderPlanet();
 
+    // model = glm::translate(glm::mat4(1.f), glm::vec3(0.f, 0.f, 30.f));
+    // model = glm::rotate(model, glm::radians(currentFrameTime * 15.f), glm::vec3(0.0f, 1.0f, 0.0f));
+    // model = glm::scale(model, glm::vec3(0.003f, 0.003f, 0.003f));
 
-    model = glm::mat4(1.f);
-    model = glm::translate(model, glm::vec3(0.f, 0.f, 30.f));
-    model = glm::scale(model, glm::vec3(0.003f, 0.003f, 0.003f));
-
-    setMatrices();
+    setMatrices(modelEarth);
     Earth->loadTexture();
     Earth->renderPlanet();
 
@@ -76,7 +88,7 @@ void SolarSystem::render(){
     model = glm::translate(model, glm::vec3(0.f, 0.f, 40.f));
     model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
 
-    setMatrices();
+    setMatrices(model);
     Mars->loadTexture();
     Mars->renderPlanet();
 
@@ -84,7 +96,7 @@ void SolarSystem::render(){
     model = glm::translate(model, glm::vec3(0.f, 0.f, 50.f));
     model = glm::scale(model, glm::vec3(0.05f, 0.05f, 0.05f));
 
-    setMatrices();
+    setMatrices(model);
     Jupiter->loadTexture();
     Jupiter->renderPlanet();
 
@@ -92,7 +104,7 @@ void SolarSystem::render(){
     model = glm::translate(model, glm::vec3(0.f, 0.f, 60.f));
     model = glm::scale(model, glm::vec3(0.03f, 0.03f, 0.03f));
 
-    setMatrices();
+    setMatrices(model);
     Saturn->loadTexture();
     Saturn->renderPlanet();
 
@@ -100,7 +112,7 @@ void SolarSystem::render(){
     model = glm::translate(model, glm::vec3(0.f, 0.f, 70.f));
     model = glm::scale(model, glm::vec3(0.03f, 0.03f, 0.03f));
 
-    setMatrices();
+    setMatrices(model);
     Uranus->loadTexture();
     Uranus->renderPlanet();
 
@@ -108,7 +120,7 @@ void SolarSystem::render(){
     model = glm::translate(model, glm::vec3(0.f, 0.f, 80.f));
     model = glm::scale(model, glm::vec3(0.03f, 0.03f, 0.03f));
 
-    setMatrices();
+    setMatrices(model);
     Neptune->loadTexture();
     Neptune->renderPlanet();
     glActiveTexture(GL_TEXTURE0);
@@ -145,7 +157,7 @@ void SolarSystem::resize(int w, int h)
     projection = glm::perspective(glm::radians(45.0f), (float)w/h, 0.1f, 10000.0f);
 }
 
-void SolarSystem::setMatrices()
+void SolarSystem::setMatrices(glm::mat4 model)
 {
     glm::mat4 mv = view * model;
     p.setUniform("ModelViewMatrix", mv);
