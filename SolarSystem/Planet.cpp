@@ -6,6 +6,7 @@
 Planet::Planet(std::string objectLocation, std::string textureLocation = ""){
     this->objectLocation = objectLocation;
     this->textureLocation = textureLocation;
+    this->planetModel = glm::mat4(1.f);
 
     if(this->textureLocation.empty() || this->textureLocation == "") throw "Object has no location. Have you set location?";
     planet = ObjMesh::load(this->objectLocation.c_str(), true);

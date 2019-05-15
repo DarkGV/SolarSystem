@@ -40,87 +40,45 @@ void SolarSystem::render(){
     p.setUniform("Material.Ka", 0.1f, 0.1f, 0.1f);
     p.setUniform("Material.Shininess", 100.0f);
 
-    GLfloat currentFrameTime = (GLfloat)glfwGetTime();
+    // model = glm::mat4(1.f);
+    // model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
 
-    glm::mat4 modelVenus, modelEarth;
-
-    modelVenus = glm::translate(glm::mat4(1.f), glm::vec3(0.f, 0.f, 20.f));
-    modelVenus = glm::scale(modelVenus, glm::vec3(0.01f, 0.01f, 0.01f));
-    modelVenus = glm::rotate(modelVenus, glm::radians((GLfloat)glfwGetTime() * 18.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-
-    modelEarth = glm::translate(glm::mat4(1.f), glm::vec3(0.f, 0.f, 30.f));
-    modelEarth = glm::rotate(modelEarth, glm::radians((GLfloat)glfwGetTime()*20.f), glm::vec3(0.0f, 1.0f, 0.0f));
-    modelEarth = glm::scale(modelEarth, glm::vec3(0.003f, 0.003f, 0.003f));
-
-    model = glm::mat4(1.f);
-    model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
-
-    setMatrices(model);
+    setMatrices(Sun->planetModel);
     Sun->loadTexture();
     Sun->renderPlanet();
 
-    model = glm::mat4(1.f);
-    model = glm::translate(model, glm::vec3(0.f, 0.f, 15.f));
-    model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
-
-    setMatrices(model);
+    setMatrices(Mercury->planetModel);
     Mercury->loadTexture();
     Mercury->renderPlanet();
 
-    // model = glm::mat4(1.f);
-    // model = glm::translate(model, glm::vec3(0.f, 0.f, 20.f));
-    // model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
-    // model = glm::rotate(model, glm::radians((GLfloat)currentFrameTime * 20.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
-    setMatrices(modelVenus);
+    setMatrices(Venus->planetModel);
     Venus->loadTexture();
     Venus->renderPlanet();
 
-    // model = glm::translate(glm::mat4(1.f), glm::vec3(0.f, 0.f, 30.f));
-    // model = glm::rotate(model, glm::radians(currentFrameTime * 15.f), glm::vec3(0.0f, 1.0f, 0.0f));
-    // model = glm::scale(model, glm::vec3(0.003f, 0.003f, 0.003f));
 
-    setMatrices(modelEarth);
+    setMatrices(Earth->planetModel);
     Earth->loadTexture();
     Earth->renderPlanet();
 
-    model = glm::mat4(1.f);
-    model = glm::translate(model, glm::vec3(0.f, 0.f, 40.f));
-    model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
-
-    setMatrices(model);
+    setMatrices(Mars->planetModel);
     Mars->loadTexture();
     Mars->renderPlanet();
 
-    model = glm::mat4(1.f);
-    model = glm::translate(model, glm::vec3(0.f, 0.f, 50.f));
-    model = glm::scale(model, glm::vec3(0.05f, 0.05f, 0.05f));
 
-    setMatrices(model);
+    setMatrices(Jupiter->planetModel);
     Jupiter->loadTexture();
     Jupiter->renderPlanet();
 
-    model = glm::mat4(1.f);
-    model = glm::translate(model, glm::vec3(0.f, 0.f, 60.f));
-    model = glm::scale(model, glm::vec3(0.03f, 0.03f, 0.03f));
-
-    setMatrices(model);
+    setMatrices(Saturn->planetModel);
     Saturn->loadTexture();
     Saturn->renderPlanet();
 
-    model = glm::mat4(1.f);
-    model = glm::translate(model, glm::vec3(0.f, 0.f, 70.f));
-    model = glm::scale(model, glm::vec3(0.03f, 0.03f, 0.03f));
-
-    setMatrices(model);
+    setMatrices(Uranus->planetModel);
     Uranus->loadTexture();
     Uranus->renderPlanet();
 
-    model = glm::mat4(1.f);
-    model = glm::translate(model, glm::vec3(0.f, 0.f, 80.f));
-    model = glm::scale(model, glm::vec3(0.03f, 0.03f, 0.03f));
-
-    setMatrices(model);
+    setMatrices(Neptune->planetModel);
     Neptune->loadTexture();
     Neptune->renderPlanet();
     glActiveTexture(GL_TEXTURE0);
@@ -146,7 +104,39 @@ void SolarSystem::renderMercury(){
 
 // This procedure is called in the main loop!
 void SolarSystem::update(float t){
+    Sun->planetModel = glm::scale(glm::mat4(1.f), glm::vec3(0.1f, 0.1f, 0.1f));
 
+    Mercury->planetModel = glm::mat4(1.f);
+    Mercury->planetModel = glm::translate(Mercury->planetModel, glm::vec3(0.f, 0.f, 15.f));
+    Mercury->planetModel = glm::scale(Mercury->planetModel, glm::vec3(0.01f, 0.01f, 0.01f));
+
+    Venus->planetModel = glm::translate(glm::mat4(1.f), glm::vec3(0.f, 0.f, 20.f));
+    Venus->planetModel = glm::scale(Venus->planetModel, glm::vec3(0.01f, 0.01f, 0.01f));
+    Venus->planetModel = glm::rotate(Venus->planetModel, glm::radians((GLfloat)glfwGetTime() * 18.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
+    Earth->planetModel = glm::translate(glm::mat4(1.f), glm::vec3(0.f, 0.f, 30.f));
+    Earth->planetModel = glm::rotate(Earth->planetModel, glm::radians((GLfloat)glfwGetTime()*20.f), glm::vec3(0.0f, 1.0f, 0.0f));
+    Earth->planetModel = glm::scale(Earth->planetModel, glm::vec3(0.003f, 0.003f, 0.003f));
+
+    Mars->planetModel = glm::mat4(1.f);
+    Mars->planetModel = glm::translate(Mars->planetModel, glm::vec3(0.f, 0.f, 40.f));
+    Mars->planetModel = glm::scale(Mars->planetModel, glm::vec3(0.1f, 0.1f, 0.1f));
+
+    Jupiter->planetModel = glm::mat4(1.f);
+    Jupiter->planetModel = glm::translate(Jupiter->planetModel, glm::vec3(0.f, 0.f, 50.f));
+    Jupiter->planetModel = glm::scale(Jupiter->planetModel, glm::vec3(0.05f, 0.05f, 0.05f));
+
+    Saturn->planetModel = glm::mat4(1.f);
+    Saturn->planetModel = glm::translate(Saturn->planetModel, glm::vec3(0.f, 0.f, 60.f));
+    Saturn->planetModel = glm::scale(Saturn->planetModel, glm::vec3(0.03f, 0.03f, 0.03f));
+
+    Uranus->planetModel = glm::mat4(1.f);
+    Uranus->planetModel = glm::translate(Uranus->planetModel, glm::vec3(0.f, 0.f, 70.f));
+    Uranus->planetModel = glm::scale(Uranus->planetModel, glm::vec3(0.03f, 0.03f, 0.03f));
+
+    Neptune->planetModel = glm::mat4(1.f);
+    Neptune->planetModel = glm::translate(Neptune->planetModel, glm::vec3(0.f, 0.f, 80.f));
+    Neptune->planetModel = glm::scale(Neptune->planetModel, glm::vec3(0.03f, 0.03f, 0.03f));
 }
 
 void SolarSystem::resize(int w, int h)

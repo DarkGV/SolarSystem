@@ -14,6 +14,7 @@ class Planet{
     GLuint textureID;
 
 public:
+    glm::mat4 planetModel;
     Planet(std::string, std::string);
 
     void changeTexture( std::string );
