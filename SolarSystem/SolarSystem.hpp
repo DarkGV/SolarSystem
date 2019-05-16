@@ -17,15 +17,14 @@ class SolarSystem : public Scene {
     *Uranus, *Neptune;
 
     GLint width, height;
-    glm::mat4 model, view, projection;
+    glm::mat4 view, projection;
 
     void setMatrices(glm::mat4);
     void compileAndLinkShader(std::string, std::string);
 
 public:
     SolarSystem();
-
-    void renderMercury();
+    
     void initScene();
     void render();
     void resize(int, int);

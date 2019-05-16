@@ -35,8 +35,6 @@ public:
       */
     virtual void render() = 0;
 
-    virtual void renderMercury() = 0;
-
     /**
       Called when screen is resized
       */
