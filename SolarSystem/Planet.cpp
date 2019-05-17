@@ -6,6 +6,7 @@
 Planet::Planet(std::string objectLocation, std::string textureLocation = "", float position = 0.f){
     this->objectLocation = objectLocation;
     this->textureLocation = textureLocation;
+
     this->position = position;
     this->planetModel = glm::mat4(1.f);
 
@@ -84,7 +85,7 @@ void Planet::movePlanet(){
     /*std::cout << "Angle -> " + std::to_string(temporary_angle) << std::endl;
     std::cout << "(" + std::to_string( sin(temporary_angle) ) + ", 0.0, " + std::to_string( cos(temporary_angle) ) + ")" << std::endl; */
 
-    planetModel = glm::translate(glm::mat4(1.f), glm::vec3(sin(temporary_angle)*position, 0.f, ( cos(temporary_angle) * position) ));
+    planetModel = glm::translate(glm::mat4(1.f), glm::vec3(sin(temporary_angle)*distance_Sun, 0.f, ( cos(temporary_angle) * distance_Sun) ));
     //planetModel += glm::translate(glm::mat4(1.f), glm::vec3( sin(temporary_angle)*60.f, 0.f, cos(temporary_angle)*35.f ));
     
 }

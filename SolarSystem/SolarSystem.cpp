@@ -19,7 +19,7 @@ void SolarSystem::initScene(){
 
     glEnable(GL_DEPTH_TEST);
 
-    view = glm::lookAt(glm::vec3(150.f,50.f,-40.f), glm::vec3(0.0f,0.0f, 0.0f), glm::vec3(0.0f,1.0f,0.0f));
+    view = glm::lookAt(glm::vec3(150.f,30.f,-150.f), glm::vec3(0.0f,0.0f, 0.0f), glm::vec3(0.0f,1.0f,0.0f));
     projection = glm::mat4(1.f);
 
     p.setUniform("Light.Intensity", glm::vec3(1.f,1.f,1.f) );
@@ -169,16 +169,11 @@ void SolarSystem::resize(int w, int h)
     glViewport(0,0,w,h);
     width = w;
     height = h;
-    projection = glm::perspective(glm::radians(45.0f), (float)w/h, 0.1f, 10000.0f);
+    projection = glm::perspective(glm::radians(70.0f), (float)w/h, 0.1f, 10000.0f);
 }
 
 void SolarSystem::setMatrices(glm::mat4 model)
 {
-    /*glm::mat4 mv = view * model;
-    p.setUniform("ModelViewMatrix", mv);
-    p.setUniform("NormalMatrix",
-                    glm::mat3( glm::vec3(mv[0]), glm::vec3(mv[1]), glm::vec3(mv[2]) ));
-    p.setUniform("MVP", projection * mv);*/
     p.setUniform("model", model);
     p.setUniform("view", view);
     p.setUniform("projection", projection);

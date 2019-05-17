@@ -108,7 +108,6 @@ private:
             //GLUtils::checkForOpenGLError(__FILE__,__LINE__);
             scene.update(float(glfwGetTime()));
             scene.render();
-            //scene.renderMercury();
             glfwSwapBuffers(window);
             glfwPollEvents();
         }
