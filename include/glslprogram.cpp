@@ -19,6 +19,7 @@ namespace GLSLShaderInfo {
 
     struct shader_file_extension extensions[] =
             {
+                    {".glsl", GLSLShader::VERTEX},
                     {".vs",   GLSLShader::VERTEX},
                     {".vert", GLSLShader::VERTEX},
                     {".gs",   GLSLShader::GEOMETRY},

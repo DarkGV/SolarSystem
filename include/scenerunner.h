@@ -2,6 +2,7 @@
 #include "scene.h"
 #include <GLFW/glfw3.h>
 #include "glutils.h"
+#include "SolarSystem.hpp"
 
 #define WIN_WIDTH 800
 #define WIN_HEIGHT 600
@@ -66,6 +67,8 @@ public:
         scene.setDimensions(fbw, fbh);
         scene.initScene();
         scene.resize(fbw, fbh);
+
+        glfwSetKeyCallback(window, SolarSystem::keyfunc);
 
         // Enter the main loop
         mainLoop(window, scene);

@@ -24,6 +24,8 @@ class SolarSystem : public Scene {
 
 public:
     SolarSystem();
+
+    static void keyfunc(GLFWwindow*, int, int, int, int);
     
     void initScene();
     void render();

@@ -40,5 +40,5 @@ void main() {
     vec3 ambAndDiff, spec;
     vec4 texColor = texture( Tex1, TexCoord );
     phongModel( Position, Normal, ambAndDiff, spec );
-    FragColor = (vec4( ambAndDiff, 1.0 ) * texColor) + vec4(spec,1.0);
+    FragColor = (vec4( ambAndDiff, 1.0 ) * texColor);// + vec4(spec,1.0);
 }

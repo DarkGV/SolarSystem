@@ -1,6 +1,6 @@
 #include "scene.h"
 #include "scenerunner.h"
-#include "SolarSystem.hpp"
+//#include "SolarSystem.hpp"
 
 
 int main(int argc, char *argv[])

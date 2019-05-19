@@ -16,17 +16,17 @@ class Planet{
     GLuint textureID;
     GLubyte *data;
     GLint s, t;
-    float position;
     GLfloat angle, radius, speed, distance_Sun;
 
 public:
     glm::mat4 planetModel;
+    glm::vec3 position;
 
     /**
      * Constructors and destructors may have be defined
      * There are some heap variables that must be deallocated
      */
-    Planet(std::string, std::string, float);
+    Planet(std::string, std::string);
     ~Planet();
 
     /**

@@ -3,11 +3,10 @@
 #include "stb/stb_image.h"
 #include "glslprogram.h"
 
-Planet::Planet(std::string objectLocation, std::string textureLocation = "", float position = 0.f){
+Planet::Planet(std::string objectLocation, std::string textureLocation = ""){
     this->objectLocation = objectLocation;
     this->textureLocation = textureLocation;
 
-    this->position = position;
     this->planetModel = glm::mat4(1.f);
 
     if(this->textureLocation.empty() || this->textureLocation == "") throw "Object has no location. Have you set location?";
@@ -30,11 +29,7 @@ void Planet::loadTexture(){
     glBindTexture(GL_TEXTURE_2D, textureID);
 
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, s, t, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-#ifdef __APPLE__
     glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, s, t, GL_RGBA, GL_UNSIGNED_BYTE, data);
-#else
-    glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGBA8, s, t);
-#endif
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -82,12 +77,8 @@ void Planet::movePlanet(){
 
     float temporary_angle = (angle / 180.f) * M_PI;
 
-    /*std::cout << "Angle -> " + std::to_string(temporary_angle) << std::endl;
-    std::cout << "(" + std::to_string( sin(temporary_angle) ) + ", 0.0, " + std::to_string( cos(temporary_angle) ) + ")" << std::endl; */
-
-    planetModel = glm::translate(glm::mat4(1.f), glm::vec3(sin(temporary_angle)*distance_Sun, 0.f, ( cos(temporary_angle) * distance_Sun) ));
-    //planetModel += glm::translate(glm::mat4(1.f), glm::vec3( sin(temporary_angle)*60.f, 0.f, cos(temporary_angle)*35.f ));
-    
+    this->position = glm::vec3(sin(temporary_angle)* (distance_Sun + 10.f), 0.f, ( cos(temporary_angle) * (distance_Sun + 10.f)) );
+    planetModel = glm::translate(glm::mat4(1.f), glm::vec3(sin(temporary_angle)*distance_Sun, 0.f, ( cos(temporary_angle) * distance_Sun) ));    
 }
 
 void Planet::setPlanetOptions(GLfloat radius, GLfloat speed, GLfloat angle, GLfloat distance_Sun){

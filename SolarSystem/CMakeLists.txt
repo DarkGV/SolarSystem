@@ -1,8 +1,6 @@
 set(target SolarSystem)
 set( chapter03_SOURCES
-	SolarSystem.hpp
 	SolarSystem.cpp
-	Planet.hpp
 	Planet.cpp
 	main.cpp )
 
