@@ -87,3 +87,11 @@ void Planet::setPlanetOptions(GLfloat radius, GLfloat speed, GLfloat angle, GLfl
     this->speed = speed;
     this->distance_Sun = distance_Sun;
 }
+
+void Planet::lockPlanet(bool locked){
+    this->locked = locked;
+}
+
+bool Planet::is_locked(){
+    return locked;
+}

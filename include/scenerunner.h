@@ -1,6 +1,5 @@
 #include "cookbookogl.h"
 #include "scene.h"
-#include <GLFW/glfw3.h>
 #include "glutils.h"
 #include "SolarSystem.hpp"
 
@@ -9,6 +8,7 @@
 
 #include <map>
 #include <string>
+#include <unistd.h>
 
 class SceneRunner {
 private:
@@ -67,8 +67,11 @@ public:
         scene.setDimensions(fbw, fbh);
         scene.initScene();
         scene.resize(fbw, fbh);
+        scene.setEventHandling();
 
-        glfwSetKeyCallback(window, SolarSystem::keyfunc);
+        glfwSetKeyCallback(window, Scene::keycallback_event);
+        glfwSetCursorPosCallback(window, Scene::mousecallback_event);
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
         // Enter the main loop
         mainLoop(window, scene);
@@ -111,8 +114,10 @@ private:
             //GLUtils::checkForOpenGLError(__FILE__,__LINE__);
             scene.update(float(glfwGetTime()));
             scene.render();
+
             glfwSwapBuffers(window);
             glfwPollEvents();
+            usleep(100);
         }
     }
 };

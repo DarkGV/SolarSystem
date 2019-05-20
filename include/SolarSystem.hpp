@@ -8,15 +8,17 @@
 #include <glm/glm.hpp>
 
 #include "cookbookogl.h"
+#include <unistd.h>
 
 
 class SolarSystem : public Scene {
     GLSLProgram p;
 
-    Planet* Sun, *Mercury, *Venus, *Earth, *Mars, *Jupiter, *Saturn,
+    Planet *Sun, *Mercury, *Venus, *Earth, *Mars, *Jupiter, *Saturn,
     *Uranus, *Neptune;
 
     GLint width, height;
+    GLfloat camPosX, camPosY, camPosZ, camLookX, camLookY, camLookZ;
     glm::mat4 view, projection;
 
     void setMatrices(glm::mat4);
@@ -25,8 +27,8 @@ class SolarSystem : public Scene {
 public:
     SolarSystem();
 
-    static void keyfunc(GLFWwindow*, int, int, int, int);
-    
+    void keycallback(GLFWwindow*, int, int, int, int);
+    void mousecallback(GLFWwindow*, double, double);
     void initScene();
     void render();
     void resize(int, int);

@@ -15,11 +15,18 @@ SolarSystem::SolarSystem(){
 // Static definition of components
 void SolarSystem::initScene(){
 
+    //this->setEventHandling();
+
     compileAndLinkShader("shader/SolarSystem.vert", "shader/multilight.frag");
 
     glEnable(GL_DEPTH_TEST);
 
-    view = glm::lookAt(glm::vec3(150.f,30.f,-150.f), glm::vec3(0.0f,0.0f, 0.0f), glm::vec3(0.0f,1.0f,0.0f));
+    camPosX = 150.f;
+    camPosY = 30.f;
+    camPosZ = -150.f;
+
+    camLookX = camLookY = camLookZ = 0.f;
+    view = glm::lookAt(glm::vec3(camPosX, camPosY, camPosZ), glm::vec3(camLookX,camLookY, camLookZ), glm::vec3(0.0f,1.0f,0.0f));
     projection = glm::mat4(1.f);
 
     p.setUniform("Light.Intensity", glm::vec3(1.f,1.f,1.f) );
@@ -90,7 +97,8 @@ void SolarSystem::render(){
     setMatrices(Neptune->planetModel);
     Neptune->loadTexture();
     Neptune->renderPlanet();
-    view = glm::lookAt(Earth->position, glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
+    view = glm::lookAt(glm::vec3(camPosX, camPosY, camPosZ), glm::vec3(camLookX,camLookY, camLookZ), glm::vec3(0.0f,1.0f,0.0f));
+    //std::cout << camPosX << std::endl;
 }
 
 // This procedure is called in the main loop!
@@ -106,6 +114,8 @@ void SolarSystem::update(float t){
      */
     Sun->planetModel = glm::scale(glm::mat4(1.f), glm::vec3(0.1f, 0.1f, 0.1f));
     Sun->planetModel = glm::rotate(Sun->planetModel, glm::radians(t*1997), glm::vec3(0.0f, 1.0f, 0.0f));
+    if(Sun->is_locked())
+        view = view = glm::lookAt(glm::vec3(0.f, 0.f, 30.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
 
     /**
      * Mercury spins at speed of 10.83 Km/h
@@ -113,6 +123,8 @@ void SolarSystem::update(float t){
     Mercury->movePlanet();
     Mercury->planetModel = glm::scale(Mercury->planetModel, glm::vec3(0.01f, 0.01f, 0.01f));
     Mercury->planetModel = glm::rotate(Mercury->planetModel, glm::radians(t*10.83f/60.f), glm::vec3(0.0f, 1.0f, 0.0f));
+    if(Mercury->is_locked())
+        view = view = glm::lookAt(Mercury->position, glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
 
 
     /**
@@ -121,6 +133,8 @@ void SolarSystem::update(float t){
     Venus->movePlanet();
     Venus->planetModel = glm::scale(Venus->planetModel, glm::vec3(0.01f, 0.01f, 0.01f));
     Venus->planetModel = glm::rotate(Venus->planetModel, glm::radians(t*6.52f/60.f), glm::vec3(0.0f, 1.0f, 0.0f));
+    if(Venus->is_locked())
+        view = view = glm::lookAt(Venus->position, glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
 
     /**
      * Earth's rotation speed is 1674 km/h
@@ -128,6 +142,9 @@ void SolarSystem::update(float t){
     Earth->movePlanet();
     Earth->planetModel = glm::rotate(Earth->planetModel, glm::radians(t*1674.f/60.f), glm::vec3(0.0f, 1.0f, 0.0f));
     Earth->planetModel = glm::scale(Earth->planetModel, glm::vec3(0.003f, 0.003f, 0.003f));
+    if(Earth->is_locked()){
+        view = glm::lookAt(Earth->position, glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
+    }
 
     /**
      * Mars spins at speed 866 km/h
@@ -135,6 +152,8 @@ void SolarSystem::update(float t){
     Mars->movePlanet();
     Mars->planetModel = glm::scale(Mars->planetModel, glm::vec3(0.1f, 0.1f, 0.1f));
     Mars->planetModel = glm::rotate(Mars->planetModel, glm::radians(t*866.f/60.f), glm::vec3(0.0f, 1.0f, 0.0f));
+    if(Mars->is_locked())
+        view = view = glm::lookAt(Mars->position, glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
 
     /**
      * Jupiter spins at speed of 45583 km/h
@@ -142,6 +161,8 @@ void SolarSystem::update(float t){
     Jupiter->movePlanet();
     Jupiter->planetModel = glm::scale(Jupiter->planetModel, glm::vec3(0.05f, 0.05f, 0.05f));
     Jupiter->planetModel = glm::rotate(Jupiter->planetModel, glm::radians(t*45583.f/60.f), glm::vec3(0.0f, 1.0f, 0.0f));
+    if(Jupiter->is_locked())
+        view = view = glm::lookAt(Jupiter->position, glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
 
     /**
      * Saturn spins at speed of 36840 km/h
@@ -149,6 +170,8 @@ void SolarSystem::update(float t){
     Saturn->movePlanet();
     Saturn->planetModel = glm::scale(Saturn->planetModel, glm::vec3(0.03f, 0.03f, 0.03f));
     Saturn->planetModel = glm::rotate(Saturn->planetModel, glm::radians(t*36840.f / 60.f), glm::vec3(0.0f, 1.0f, 0.0f));
+    if(Saturn->is_locked())
+        view = view = glm::lookAt(Saturn->position, glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
 
     /**
      * Uranus spins at speed of 14794 km/h
@@ -156,6 +179,8 @@ void SolarSystem::update(float t){
     Uranus->movePlanet();
     Uranus->planetModel = glm::scale(Uranus->planetModel, glm::vec3(0.03f, 0.03f, 0.03f));
     Uranus->planetModel = glm::rotate(Uranus->planetModel, glm::radians(t*14794.f/60.f), glm::vec3(0.0f, 1.0f, 0.0f));
+    if(Uranus->is_locked())
+        view = view = glm::lookAt(Uranus->position, glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
 
     /**
      * Neptune spins at speed of 9719 km/h
@@ -163,6 +188,8 @@ void SolarSystem::update(float t){
     Neptune->movePlanet();
     Neptune->planetModel = glm::scale(Neptune->planetModel, glm::vec3(0.03f, 0.03f, 0.03f));
     Neptune->planetModel = glm::rotate(Neptune->planetModel, glm::radians(t*9719.f/60.f), glm::vec3(0.0f, 1.0f, 0.0f));
+    if(Neptune->is_locked())
+        view = view = glm::lookAt(Neptune->position, glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
 }
 
 void SolarSystem::resize(int w, int h)
@@ -192,7 +219,133 @@ void SolarSystem::compileAndLinkShader(std::string verticeShader, std::string fr
  		exit( EXIT_FAILURE );
     }
 }
-void SolarSystem::keyfunc(GLFWwindow* window, int key, int scancode, int action, int mods){
+
+void SolarSystem::keycallback(GLFWwindow* window, int key, int scancode, int action, int mods){
     if(key == GLFW_KEY_SPACE)
         std::cout << "Espaço pressionado" << std::endl;
+    else if(mods == GLFW_MOD_SHIFT){
+        Sun->lockPlanet(false);
+        Mercury->lockPlanet(false);
+        Venus->lockPlanet(false);
+        Earth->lockPlanet(false);
+        Mars->lockPlanet(false);
+        Jupiter->lockPlanet(false);
+        Saturn->lockPlanet(false);
+        Uranus->lockPlanet(false);
+        Neptune->lockPlanet(false);
+    }
+    else if(key == GLFW_KEY_0){
+        Sun->lockPlanet(true);
+        Mercury->lockPlanet(false);
+        Venus->lockPlanet(false);
+        Earth->lockPlanet(false);
+        Mars->lockPlanet(false);
+        Jupiter->lockPlanet(false);
+        Saturn->lockPlanet(false);
+        Uranus->lockPlanet(false);
+        Neptune->lockPlanet(false);
+    }
+    else if(key == GLFW_KEY_1)
+    {
+        Sun->lockPlanet(false);
+        Mercury->lockPlanet(true);
+        Venus->lockPlanet(false);
+        Earth->lockPlanet(false);
+        Mars->lockPlanet(false);
+        Jupiter->lockPlanet(false);
+        Saturn->lockPlanet(false);
+        Uranus->lockPlanet(false);
+        Neptune->lockPlanet(false);
+    }
+    else if(key == GLFW_KEY_2){
+        Sun->lockPlanet(false);
+        Mercury->lockPlanet(false);
+        Venus->lockPlanet(true);
+        Earth->lockPlanet(false);
+        Mars->lockPlanet(false);
+        Jupiter->lockPlanet(false);
+        Saturn->lockPlanet(false);
+        Uranus->lockPlanet(false);
+        Neptune->lockPlanet(false);
+    }
+    else if(key == GLFW_KEY_3){
+        Sun->lockPlanet(false);
+        Mercury->lockPlanet(false);
+        Venus->lockPlanet(false);
+        Earth->lockPlanet(true);
+        Mars->lockPlanet(false);
+        Jupiter->lockPlanet(false);
+        Saturn->lockPlanet(false);
+        Uranus->lockPlanet(false);
+        Neptune->lockPlanet(false);
+    }
+    else if(key == GLFW_KEY_4){
+        Sun->lockPlanet(false);
+        Mercury->lockPlanet(false);
+        Venus->lockPlanet(false);
+        Earth->lockPlanet(false);
+        Mars->lockPlanet(true);
+        Jupiter->lockPlanet(false);
+        Saturn->lockPlanet(false);
+        Uranus->lockPlanet(false);
+        Neptune->lockPlanet(false);
+
+    }else if(key == GLFW_KEY_5){
+        Sun->lockPlanet(false);
+        Mercury->lockPlanet(false);
+        Venus->lockPlanet(false);
+        Earth->lockPlanet(false);
+        Mars->lockPlanet(false);
+        Jupiter->lockPlanet(true);
+        Saturn->lockPlanet(false);
+        Uranus->lockPlanet(false);
+        Neptune->lockPlanet(false);
+
+    }else if(key == GLFW_KEY_6){
+        Sun->lockPlanet(false);
+        Mercury->lockPlanet(false);
+        Venus->lockPlanet(false);
+        Earth->lockPlanet(false);
+        Mars->lockPlanet(false);
+        Jupiter->lockPlanet(false);
+        Saturn->lockPlanet(true);
+        Uranus->lockPlanet(false);
+        Neptune->lockPlanet(false);
+
+    }else if(key == GLFW_KEY_7){
+        Sun->lockPlanet(false);
+        Mercury->lockPlanet(false);
+        Venus->lockPlanet(false);
+        Earth->lockPlanet(false);
+        Mars->lockPlanet(false);
+        Jupiter->lockPlanet(false);
+        Saturn->lockPlanet(false);
+        Uranus->lockPlanet(true);
+        Neptune->lockPlanet(false);
+
+    }else if(key == GLFW_KEY_8){
+        Sun->lockPlanet(false);
+        Mercury->lockPlanet(false);
+        Venus->lockPlanet(false);
+        Earth->lockPlanet(false);
+        Mars->lockPlanet(false);
+        Jupiter->lockPlanet(false);
+        Saturn->lockPlanet(false);
+        Uranus->lockPlanet(false);
+        Neptune->lockPlanet(true);
+
+    }
+    else if(key == GLFW_KEY_W)
+        camPosX -= 20.f;
+    else if(key==GLFW_KEY_S)
+        camPosX += 20.f;
+    else if (key == GLFW_KEY_D)
+        camPosZ -= 20.f;
+    else if (key == GLFW_KEY_A)
+        camPosZ += 20.f;
+}
+
+void SolarSystem::mousecallback(GLFWwindow* window, double xpos, double ypos){
+    std::cout << "Position x: " + std::to_string(xpos) << std::endl;
+    std::cout << "Position y: " + std::to_string(ypos) << std::endl;
 }

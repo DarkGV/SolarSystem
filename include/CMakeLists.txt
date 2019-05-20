@@ -5,7 +5,7 @@ set(ingredients_SOURCES
         objmesh.cpp
         glslprogram.cpp
         cookbookogl.h
-        scene.h
+        scene.h scene.cpp
         glad/src/glad.c trianglemesh.cpp trianglemesh.h aabb.h
         scenerunner.h
         texture.h texture.cpp

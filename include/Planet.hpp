@@ -17,6 +17,7 @@ class Planet{
     GLubyte *data;
     GLint s, t;
     GLfloat angle, radius, speed, distance_Sun;
+    bool locked = false;
 
 public:
     glm::mat4 planetModel;
@@ -39,6 +40,7 @@ public:
     void planetAngle( GLfloat );
     void planetSpeed ( GLfloat );
     void planetDistanceSun( GLfloat );
+
     /**
      * Accepts Radius, speed, angle and distance to sun by this order
      */
@@ -56,6 +58,9 @@ public:
      */
     void renderPlanet();
     void loadTexture();
+
+    void lockPlanet(bool);
+    bool is_locked();
 
 
 };

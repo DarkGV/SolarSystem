@@ -1,5 +1,6 @@
 #pragma once
 
+#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
 class Scene
@@ -10,8 +11,9 @@ protected:
 public:
     int width;
     int height;
+    static Scene *event_handling;
 
-	Scene() : m_animate(true), width(800), height(600) { }
+	Scene() : width(800), height(600) { }
 	virtual ~Scene() {}
 
 	void setDimensions( int w, int h ) {
@@ -35,14 +37,23 @@ public:
       */
     virtual void render() = 0;
 
+    virtual void keycallback(GLFWwindow*, int, int, int, int) = 0;
+    virtual void mousecallback(GLFWwindow*, double, double) = 0;
+
+    virtual void setEventHandling() { event_handling = this; }
+
     /**
       Called when screen is resized
       */
     virtual void resize(int, int) = 0;
-    
-    void animate( bool value ) { m_animate = value; }
-    bool animating() { return m_animate; }
-    
-protected:
-	bool m_animate;
+
+    static void keycallback_event(GLFWwindow* window, int key, int scancode, int action, int mods){
+      if(event_handling)
+        event_handling->keycallback(window, key, scancode, action, mods);
+    }
+
+    static void mousecallback_event(GLFWwindow *window , double xpos, double ypos){
+      if(event_handling)
+        event_handling->mousecallback(window, xpos,ypos);
+    }
 };
