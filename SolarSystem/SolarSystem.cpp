@@ -4,13 +4,30 @@ SolarSystem::SolarSystem(){
     Sun = new Planet("/Users/DiogoSilva/Desktop/CGPratico/res/Sun/SunObject.obj", "/Users/DiogoSilva/Desktop/CGPratico/res/Sun/SunTexture.jpg");
     Sun->loadInfo("/Users/DiogoSilva/Desktop/CGPratico/res/sun_info.png");
     Mercury = new Planet("/Users/DiogoSilva/Desktop/CGPratico/res/Mercury/MercuryObject.obj", "/Users/DiogoSilva/Desktop/CGPratico/res/Mercury/MercuryTexture.jpg");
+    Mercury->loadInfo("/Users/DiogoSilva/Desktop/CGPratico/res/info_mercury.png");
     Venus = new Planet("/Users/DiogoSilva/Desktop/CGPratico/res/Venus/VenusObject.obj", "/Users/DiogoSilva/Desktop/CGPratico/res/Venus/VenusTexture.jpg");
+    Venus->loadInfo("/Users/DiogoSilva/Desktop/CGPratico/res/info_venus.png");
     Earth = new Planet("/Users/DiogoSilva/Desktop/CGPratico/res/Earth/EarthObject.obj", "/Users/DiogoSilva/Desktop/CGPratico/res/Earth/EarthTexture.jpg");
+    Earth->loadInfo("/Users/DiogoSilva/Desktop/CGPratico/res/info_earth.png");
     Mars = new Planet("/Users/DiogoSilva/Desktop/CGPratico/res/Mars/MarsObject.obj", "/Users/DiogoSilva/Desktop/CGPratico/res/Mars/MarsTexture.jpg");
+    Mars->loadInfo("/Users/DiogoSilva/Desktop/CGPratico/res/info_mars.png");
     Jupiter = new Planet("/Users/DiogoSilva/Desktop/CGPratico/res/Jupiter/JupiterObject.obj", "/Users/DiogoSilva/Desktop/CGPratico/res/Jupiter/JupiterTexture.jpg");
+    Jupiter->loadInfo("/Users/DiogoSilva/Desktop/CGPratico/res/info_jupiter.png");
     Saturn = new Planet("/Users/DiogoSilva/Desktop/CGPratico/res/Saturn/SaturnObject.obj", "/Users/DiogoSilva/Desktop/CGPratico/res/Saturn/SaturnTexture.jpg");
+    Saturn->loadInfo("/Users/DiogoSilva/Desktop/CGPratico/res/info_saturn.png");
     Uranus = new Planet("/Users/DiogoSilva/Desktop/CGPratico/res/Uranus/UranusObject.obj", "/Users/DiogoSilva/Desktop/CGPratico/res/Uranus/UranusTexture.jpg");
+    Uranus->loadInfo("/Users/DiogoSilva/Desktop/CGPratico/res/info_uranos.png");
     Neptune = new Planet("/Users/DiogoSilva/Desktop/CGPratico/res/Neptune/NeptuneObject.obj", "/Users/DiogoSilva/Desktop/CGPratico/res/Neptune/NeptuneTexture.jpg");
+    Neptune->loadInfo("/Users/DiogoSilva/Desktop/CGPratico/res/info_neptune.png");
+
+    camPosX = 150.f;
+    camPosY = 30.f;
+    camPosZ = -150.f;
+
+    camLookX = 0.f;
+    camLookY = 0.f;
+    camLookZ = 0.f;
+
 }
 
 // Static definition of components
@@ -21,8 +38,8 @@ void SolarSystem::initScene(){
     compileAndLinkShader("shader/SolarSystem.vert", "shader/multilight.frag");
 
     glEnable(GL_DEPTH_TEST);
-    //view = c.updateLookAt();
-    view = glm::lookAt(glm::vec3(camPosX, camPosY, camPosZ), glm::vec3(camLookX,camLookY, camLookZ), glm::vec3(0.0f,1.0f,0.0f));
+    //view = c->updateLookAt();
+    view = glm::lookAt(glm::vec3(150.f, 30.f, -150.f), glm::vec3(0,0, 0), glm::vec3(0.0f,1.0f,0.0f));
     projection = glm::mat4(1.f);
 
     p.setUniform("Light.Intensity", glm::vec3(1.f,1.f,1.f) );
@@ -141,12 +158,13 @@ void SolarSystem::render(){
           p.setUniform("Material.Ka", 0.7f, 0.7f, 0.7f);
           p.setUniform("Material.Shininess", 100.0f);
 
-          view = glm::lookAt(glm::vec3(0.f, 0.f, 30.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
-          model = glm::translate(glm::mat4(1.f), glm::vec3(9.f, 6.f, 13.f));
+          model = glm::translate(glm::mat4(1.f), glm::vec3(140.f, 30.f, -145.f));
           model = glm::rotate(model, glm::radians(-90.f), glm::vec3(1.f, 0.f, 0.f));
+          model = glm::rotate(model, glm::radians(130.f), glm::vec3(.0f, 0.f, 1.f));
           setMatrices(model);
           Sun->loadInfoTexture();
           Sun->infoPlane.render();
+          view = glm::lookAt(glm::vec3(150.f, 30.f, -150.f), glm::vec3(0,0, 0), glm::vec3(0.0f,1.0f,0.0f));
     }
     else if(Mercury->is_locked()){
       p.setUniform("Material.Kd", 0.9f, 0.9f, 0.9f);
@@ -154,29 +172,114 @@ void SolarSystem::render(){
       p.setUniform("Material.Ka", 0.7f, 0.7f, 0.7f);
       p.setUniform("Material.Shininess", 100.0f);
 
-      view = glm::lookAt( Mercury->position, glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f) );
-      model = glm::translate( glm::mat4(1.f), Mercury->planePosition );
-      model = glm::rotate( model, glm::radians(-90.f), glm::vec3(1.f, 0.f, 0.f) );
+      model = glm::translate(glm::mat4(1.f), glm::vec3(140.f, 30.f, -145.f));
+      model = glm::rotate(model, glm::radians(-90.f), glm::vec3(1.f, 0.f, 0.f));
+      model = glm::rotate(model, glm::radians(130.f), glm::vec3(.0f, 0.f, 1.f));
       setMatrices(model);
-      Sun->loadInfoTexture();
-      Sun->infoPlane.render();
+      Mercury->loadInfoTexture();
+      Mercury->infoPlane.render();
+      view = glm::lookAt(glm::vec3(150.f, 30.f, -150.f), glm::vec3(0,0, 0), glm::vec3(0.0f,1.0f,0.0f));
     }
-    else if(Venus->is_locked())
-        view = glm::lookAt(Venus->position, glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
-    else if(Earth->is_locked())
-        view = glm::lookAt(Earth->position, glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
-    else if(Mars->is_locked())
-        view = glm::lookAt(Mars->position, glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
-    else if(Jupiter->is_locked())
-        view = glm::lookAt(Jupiter->position, glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
-    else if(Saturn->is_locked())
-        view = glm::lookAt(Saturn->position, glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
-    else if(Uranus->is_locked())
-        view = glm::lookAt(Uranus->position, glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
-    else if(Neptune->is_locked())
-        view = glm::lookAt(Neptune->position, glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
+    else if(Venus->is_locked()){
+      p.setUniform("Material.Kd", 0.9f, 0.9f, 0.9f);
+      p.setUniform("Material.Ks", 0.2f, 0.2f, 0.2f);
+      p.setUniform("Material.Ka", 0.7f, 0.7f, 0.7f);
+      p.setUniform("Material.Shininess", 100.0f);
+
+      model = glm::translate(glm::mat4(1.f), glm::vec3(140.f, 30.f, -145.f));
+      model = glm::rotate(model, glm::radians(-90.f), glm::vec3(1.f, 0.f, 0.f));
+      model = glm::rotate(model, glm::radians(130.f), glm::vec3(.0f, 0.f, 1.f));
+      setMatrices(model);
+      Venus->loadInfoTexture();
+      Venus->infoPlane.render();
+      view = glm::lookAt(glm::vec3(150.f, 30.f, -150.f), glm::vec3(0,0, 0), glm::vec3(0.0f,1.0f,0.0f));
+    }
+    else if(Earth->is_locked()){
+      p.setUniform("Material.Kd", 0.9f, 0.9f, 0.9f);
+      p.setUniform("Material.Ks", 0.2f, 0.2f, 0.2f);
+      p.setUniform("Material.Ka", 0.7f, 0.7f, 0.7f);
+      p.setUniform("Material.Shininess", 100.0f);
+
+      model = glm::translate(glm::mat4(1.f), glm::vec3(140.f, 30.f, -145.f));
+      model = glm::rotate(model, glm::radians(-90.f), glm::vec3(1.f, 0.f, 0.f));
+      model = glm::rotate(model, glm::radians(130.f), glm::vec3(.0f, 0.f, 1.f));
+      setMatrices(model);
+      Earth->loadInfoTexture();
+      Earth->infoPlane.render();
+      view = glm::lookAt(glm::vec3(150.f, 30.f, -150.f), glm::vec3(0,0, 0), glm::vec3(0.0f,1.0f,0.0f));
+    }
+    else if(Mars->is_locked()){
+      p.setUniform("Material.Kd", 0.9f, 0.9f, 0.9f);
+      p.setUniform("Material.Ks", 0.2f, 0.2f, 0.2f);
+      p.setUniform("Material.Ka", 0.7f, 0.7f, 0.7f);
+      p.setUniform("Material.Shininess", 100.0f);
+
+      model = glm::translate(glm::mat4(1.f), glm::vec3(140.f, 30.f, -145.f));
+      model = glm::rotate(model, glm::radians(-90.f), glm::vec3(1.f, 0.f, 0.f));
+      model = glm::rotate(model, glm::radians(130.f), glm::vec3(.0f, 0.f, 1.f));
+      setMatrices(model);
+      Mars->loadInfoTexture();
+      Mars->infoPlane.render();
+      view = glm::lookAt(glm::vec3(150.f, 30.f, -150.f), glm::vec3(0,0, 0), glm::vec3(0.0f,1.0f,0.0f));
+    }
+    else if(Jupiter->is_locked()){
+      p.setUniform("Material.Kd", 0.9f, 0.9f, 0.9f);
+      p.setUniform("Material.Ks", 0.2f, 0.2f, 0.2f);
+      p.setUniform("Material.Ka", 0.7f, 0.7f, 0.7f);
+      p.setUniform("Material.Shininess", 100.0f);
+
+      model = glm::translate(glm::mat4(1.f), glm::vec3(140.f, 30.f, -145.f));
+      model = glm::rotate(model, glm::radians(-90.f), glm::vec3(1.f, 0.f, 0.f));
+      model = glm::rotate(model, glm::radians(130.f), glm::vec3(.0f, 0.f, 1.f));
+      setMatrices(model);
+      Jupiter->loadInfoTexture();
+      Jupiter->infoPlane.render();
+      view = glm::lookAt(glm::vec3(150.f, 30.f, -150.f), glm::vec3(0,0, 0), glm::vec3(0.0f,1.0f,0.0f));
+    }
+    else if(Saturn->is_locked()){
+      p.setUniform("Material.Kd", 0.9f, 0.9f, 0.9f);
+      p.setUniform("Material.Ks", 0.2f, 0.2f, 0.2f);
+      p.setUniform("Material.Ka", 0.7f, 0.7f, 0.7f);
+      p.setUniform("Material.Shininess", 100.0f);
+
+      model = glm::translate(glm::mat4(1.f), glm::vec3(140.f, 30.f, -145.f));
+      model = glm::rotate(model, glm::radians(-90.f), glm::vec3(1.f, 0.f, 0.f));
+      model = glm::rotate(model, glm::radians(130.f), glm::vec3(.0f, 0.f, 1.f));
+      setMatrices(model);
+      Saturn->loadInfoTexture();
+      Saturn->infoPlane.render();
+      view = glm::lookAt(glm::vec3(150.f, 30.f, -150.f), glm::vec3(0,0, 0), glm::vec3(0.0f,1.0f,0.0f));
+    }
+    else if(Uranus->is_locked()){
+      p.setUniform("Material.Kd", 0.9f, 0.9f, 0.9f);
+      p.setUniform("Material.Ks", 0.2f, 0.2f, 0.2f);
+      p.setUniform("Material.Ka", 0.7f, 0.7f, 0.7f);
+      p.setUniform("Material.Shininess", 100.0f);
+
+      model = glm::translate(glm::mat4(1.f), glm::vec3(140.f, 30.f, -145.f));
+      model = glm::rotate(model, glm::radians(-90.f), glm::vec3(1.f, 0.f, 0.f));
+      model = glm::rotate(model, glm::radians(130.f), glm::vec3(.0f, 0.f, 1.f));
+      setMatrices(model);
+      Uranus->loadInfoTexture();
+      Uranus->infoPlane.render();
+      view = glm::lookAt(glm::vec3(150.f, 30.f, -150.f), glm::vec3(0,0, 0), glm::vec3(0.0f,1.0f,0.0f));
+    }
+    else if(Neptune->is_locked()){
+      p.setUniform("Material.Kd", 0.9f, 0.9f, 0.9f);
+      p.setUniform("Material.Ks", 0.2f, 0.2f, 0.2f);
+      p.setUniform("Material.Ka", 0.7f, 0.7f, 0.7f);
+      p.setUniform("Material.Shininess", 100.0f);
+
+      model = glm::translate(glm::mat4(1.f), glm::vec3(140.f, 30.f, -145.f));
+      model = glm::rotate(model, glm::radians(-90.f), glm::vec3(1.f, 0.f, 0.f));
+      model = glm::rotate(model, glm::radians(130.f), glm::vec3(.0f, 0.f, 1.f));
+      setMatrices(model);
+      Neptune->loadInfoTexture();
+      Neptune->infoPlane.render();
+      view = glm::lookAt(glm::vec3(150.f, 30.f, -150.f), glm::vec3(0,0, 0), glm::vec3(0.0f,1.0f,0.0f));
+    }
     else
-        view = glm::lookAt(glm::vec3(camPosX, camPosY, camPosZ), glm::vec3(camLookX,camLookY, camLookZ), glm::vec3(0.0f,1.0f,0.0f));
+        view = glm::lookAt(glm::vec3(camPosX, camPosY, camPosZ), glm::vec3(camLookX,camLookY,camLookZ), glm::vec3(0.0f,1.0f,0.0f));
     //std::cout << camPosX << std::endl;
 }
 
@@ -396,24 +499,15 @@ void SolarSystem::keycallback(GLFWwindow* window, int key, int scancode, int act
         Saturn->lockPlanet(false);
         Uranus->lockPlanet(false);
         Neptune->lockPlanet(true);
-
+    }else if(key == GLFW_KEY_W){
+        camPosX += 1.;
+    }else if(key == GLFW_KEY_S){
+      camPosX -= 1.;
+    }else if(key == GLFW_KEY_A){
+      camPosZ += 1.;
+    } else if(key == GLFW_KEY_D){
+      camPosZ -= 1.;
     }
-    else if(key == GLFW_KEY_W){
-        camPosX -= 20.f;
-        //c.updateX( 20.f );
-    }
-    else if(key==GLFW_KEY_S)
-        c->updateX( 20.f );
-    else if (key == GLFW_KEY_D)
-        camPosZ -= 20.f;
-    else if (key == GLFW_KEY_A)
-        camPosZ += 20.f;
-    else if (key == GLFW_KEY_X)
-        camPosX = 0;
-    else if (key == GLFW_KEY_Y)
-        camPosY = 0;
-    else if (key == GLFW_KEY_Z)
-        camPosZ = 0;
 }
 
 void SolarSystem::mousecallback(GLFWwindow* window, double xpos, double ypos){

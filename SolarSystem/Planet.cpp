@@ -94,8 +94,9 @@ void Planet::movePlanet(){
 
     float temporary_angle = (angle / 180.f) * M_PI;
 
+    this->planePosition = glm::vec3(sin(temporary_angle)* (distance_Sun), 0.f, ( cos(temporary_angle) * (distance_Sun)) );
     this->position = glm::vec3(sin(temporary_angle)* (distance_Sun + 10.f), 0.f, ( cos(temporary_angle) * (distance_Sun + 10.f)) );
-    this->planePosition = glm::vec3(sin(temporary_angle)* (distance_Sun+5.f), 0.f, ( cos(temporary_angle) * (distance_Sun+5.f)) );
+
     planetModel = glm::translate(glm::mat4(1.f), glm::vec3(sin(temporary_angle)*distance_Sun, 0.f, ( cos(temporary_angle) * distance_Sun) ));
 }
 
