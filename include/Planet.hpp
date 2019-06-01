@@ -5,6 +5,7 @@
 
 #include "objmesh.h"
 #include "texture.h"
+#include "plane.h"
 
 #include <glm/glm.hpp>
 #include <math.h>
@@ -14,14 +15,16 @@ class Planet{
     std::unique_ptr<ObjMesh> planet;
     std::string textureLocation, objectLocation;
     GLuint textureID;
-    GLubyte *data;
-    GLint s, t;
-    GLfloat angle, radius, speed, distance_Sun;
+    GLubyte *data, *infoData;
+    GLint s, t, s_info, t_info;
+    GLfloat angle, radius, speed;
     bool locked = false;
 
 public:
+    Plane infoPlane;
+    GLfloat distance_Sun;
     glm::mat4 planetModel;
-    glm::vec3 position;
+    glm::vec3 position, planePosition;
 
     /**
      * Constructors and destructors may have be defined
@@ -48,19 +51,22 @@ public:
 
     /**
      * Define calculations procedures
-     * This procesure will use default variable defined in this 
+     * This procesure will use default variable defined in this
      * class for each planet
      */
-    void movePlanet(); 
+    void movePlanet();
 
     /**
      * OpenGL based functions
      */
     void renderPlanet();
     void loadTexture();
+    void loadInfo(std::string);
+    void loadInfoTexture();
 
     void lockPlanet(bool);
     bool is_locked();
 
+    //void renderOrbit();
 
 };

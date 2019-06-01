@@ -8,17 +8,21 @@
 #include <glm/glm.hpp>
 
 #include "cookbookogl.h"
+#include "Camera.hpp"
 #include <unistd.h>
 
 
 class SolarSystem : public Scene {
     GLSLProgram p;
 
+    bool paused = true;
+
     Planet *Sun, *Mercury, *Venus, *Earth, *Mars, *Jupiter, *Saturn,
     *Uranus, *Neptune;
 
     GLint width, height;
     GLfloat camPosX, camPosY, camPosZ, camLookX, camLookY, camLookZ;
+    Camera *c = new Camera(150.f, 30.f, -150.f, 0.f, 0.f, 0.f);
     glm::mat4 view, projection;
 
     void setMatrices(glm::mat4);
